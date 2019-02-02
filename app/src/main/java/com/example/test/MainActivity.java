@@ -13,9 +13,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    JSONObject RESPONSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,21 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        String resp = ("Response: " + response.toString());
-                        int x = 5;
+                         RESPONSE = response;
+                        try {
+                            JSONArray results = RESPONSE.getJSONArray("results");
+                            JSONObject resultsObject = results.getJSONObject(0);
+                            JSONObject geometry = resultsObject.getJSONObject("geometry");
+                            JSONObject location = geometry.getJSONObject("location");
+                            Double latValue = location.getDouble("lat");
+                            Double lngValue = location.getDouble("lng");
+
+                            int x = 5;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -53,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
                 });
         
-        requestQueue.add(jsonObjectRequest);
 
+        requestQueue.add(jsonObjectRequest);
     }
 
 }
