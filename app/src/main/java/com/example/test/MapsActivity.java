@@ -12,6 +12,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final String LAT_VALUE = "LAT_VALUE";
+    private static final String LNG_VALUE = "LNG_VALUE";
+
     private GoogleMap mMap;
 
     @Override
@@ -38,9 +41,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        Double latValue = getIntent().getDoubleExtra(LAT_VALUE, 0);
+        Double lngValue = getIntent().getDoubleExtra(LNG_VALUE, 0);
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng location = new LatLng(latValue, lngValue);
+        mMap.addMarker(new MarkerOptions().position(location).title("Marker at Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 }

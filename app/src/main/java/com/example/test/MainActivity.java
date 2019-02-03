@@ -1,10 +1,12 @@
 package com.example.test;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,7 +21,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final String LAT_VALUE = "LAT_VALUE";
+    private static final String LNG_VALUE = "LNG_VALUE";
     JSONObject RESPONSE;
 
     @Override
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                             Double latValue = location.getDouble("lat");
                             Double lngValue = location.getDouble("lng");
 
+                            sendCoordinates(latValue, lngValue);
+
                             int x = 5;
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -73,6 +78,19 @@ public class MainActivity extends AppCompatActivity {
         
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void sendCoordinates(Double latValue, Double lngValue){
+        Intent randomIntent = new Intent(this, MapsActivity.class);
+        String latValueString = latValue.toString();
+        String lngValueString = lngValue.toString();
+
+        randomIntent.putExtra(LAT_VALUE, latValue);
+        randomIntent.putExtra(LNG_VALUE, lngValue);
+
+        startActivity(randomIntent);
+
+
     }
 
 }
