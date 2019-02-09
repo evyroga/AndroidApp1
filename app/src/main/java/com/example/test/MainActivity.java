@@ -32,15 +32,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGeocode(View view){
+        //Nick driving
         EditText textInput = findViewById(R.id.editText);
         String address = textInput.getText().toString();
         String parsedAddress = address.replaceAll("\\s", "+");
         String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress + "&key=AIzaSyB3ZauVyCg_Bu2FhoQcipksZAjk0zDaIbQ";
-
-
+        //end of Nick driving, Vivian driving now
         Context mContext = getApplicationContext();
-
-
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -70,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
+                        error.printStackTrace();
                     }
 
                 });
         
 
         requestQueue.add(jsonObjectRequest);
+        //end of Vivian driving, Nick driving now
     }
 
     public void sendCoordinates(Double latValue, Double lngValue){
@@ -92,5 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    //end of Nick driving, Vivian driving now
 
 }
